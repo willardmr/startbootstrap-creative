@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
 {% load crispy_forms_tags %}
+{% load analytical %}
 <html lang="en">
 
 <head>
-
+    {% analytical_head_top %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,17 +34,17 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    {% analytical_head_bottom %}
 </head>
 
 <body id="page-top">
-
+    {% analytical_body_top %}
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">Find an Open Source Project</a>
             </div>
@@ -139,7 +140,7 @@
         <div class="container">
             <div class="col-lg-8 col-lg-offset-2">
 
-                <div class="text-center">This project is a result of my struggles with Github's searching a filtering interface.  I had difficulties with it even as I worked on this project!  Hopefully this project will make contributing to open source projects more accessible to new programmers. Learn more about me at <a class="dark-link" href="http://maxwellwillard.me">maxwellwillard.me</a>.</div>
+                <div class="text-center">This project is a result of my struggles with Github's searching interface.  I had difficulties with it even as I worked on this project!  Hopefully this project will make contributing to open source projects more accessible to new programmers. Learn more about me at <a class="dark-link" href="http://maxwellwillard.me">maxwellwillard.me</a>.</div>
                 </div>
      </section>
 
@@ -215,7 +216,7 @@
         }
 
     </script>
-
+    {% analytical_body_bottom %}
 </body>
 
 </html>
