@@ -202,6 +202,9 @@
                 html = html + "<a href='javascript:;' class='dark-link' onclick='GoToPage(" + (page+1) + "," + pk + ")'>next</a>";
             }
             $("#pagination").html(html);
+            $('html, body').stop().animate({
+                scrollTop: ($('#search_results').offset().top - 50)
+            }, 1250, 'easeInOutExpo');
         }
 
     </script>
