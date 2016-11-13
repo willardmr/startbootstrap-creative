@@ -152,7 +152,6 @@
         var frm = $('#id-search');
         var current_page = 0;
         var pk = 0;
-        var total_pages = 0; 
         frm.submit(function () {
             
             $("#pagination").html("");
@@ -168,9 +167,8 @@
                 success: function (data) {
                     current_page = 0;
                     pk = data.pk;
-                    total_pages = data.total_pages;
                     $("#results").html(data.html);
-                    Paginate(current_page, total_pages);
+                    Paginate(current_page);
                 },
                 error: function(data) {
                     $("#MESSAGE-DIV").html("Something went wrong!");
@@ -181,32 +179,41 @@
 
         function GoToPage(page, pk)
         {
-                $("#pagination").html("<div class='text-center'><span class='glyphicon glyphicon-refresh spinning'></span></div>");
+                $('html, body').stop().animate({
+                            scrollTop: ($('#search_results').offset().top - 50)
+                        }, 1250, 'easeInOutExpo');
+
+
                 $.post('{% url "get_page" %}', 
                     { "csrfmiddlewaretoken": "{{ csrf_token }}", "page": page, "pk" : pk}, 
                     function(returnedData){
-                        $("#results").html(returnedData);
-                        current_page = page
-                        Paginate(page, total_pages); 
+                        $("#results").html(returnedData.html);
+                                                current_page = page
+                        Paginate(page); 
                 }).fail(function(){
                       console.log("error");
                 });
         }
-        function Paginate(page, total_pages)
+        function Paginate(page)
         {
+
+            $("#pagination").html("<div class='text-center'>Retrieving pages...</div><br><div class='text-center'><span class='glyphicon glyphicon-refresh spinning'></span></div>");
             var html = "";
             if (page != 0) {
                 html = html + "<a href='javascript:;' class='dark-link' onclick='GoToPage(" + (page-1) + "," + pk + ")'>prev </a>";
             }
+            $.post('{% url "get_page" %}', 
+                    { "csrfmiddlewaretoken": "{{ csrf_token }}", "page": page + 1, "pk" : pk}, 
+                    function(returnedData){
+                            if (returnedData.page_exists == true) {
+                                html = html + "<a href='javascript:;' class='dark-link' onclick='GoToPage(" + (page+1) + "," + pk + ")'>next</a>";
+                            }
+                            $("#pagination").html(html);
+                }).fail(function(){
+                      console.log("error");
+                });
 
-            if (page != total_pages) {
-                html = html + "<a href='javascript:;' class='dark-link' onclick='GoToPage(" + (page+1) + "," + pk + ")'>next</a>";
-            }
-            $("#pagination").html(html);
-            $('html, body').stop().animate({
-                scrollTop: ($('#search_results').offset().top - 50)
-            }, 1250, 'easeInOutExpo');
-        }
+                    }
 
     </script>
     </div>
